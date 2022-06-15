@@ -29,6 +29,8 @@ contacts = new Array();
 
 let n=0;
 
+console.log(`Hey Sir, i'm your directory ! 
+Enter /help to display a list of commands.`);
 switchCase();
 
 
@@ -40,14 +42,17 @@ function add(){
         rl.question(`What is the family name of your contact ? `, (answer) => {
             temp.family = answer;
             rl.question(`What is the phone number of your contact ? `, (answer) => {
-                temp.number = answer;
-                console.log(`Your contact `+name+" "+lastname+" have been added succesfully to the directory !\n");
-                console.log(temp);
-                temp.id = contacts.length+1;
-                contacts.push(temp);
-                temp = {};
-                console.log(contacts);
-                switchCase();
+                if(answer.match(/^(0[6])(?:[ _.-]?(\d{2})){4}$/)){
+                    temp.number = answer;
+                    console.log(`Your contact `+temp.name+" "+temp.family+" have been added succesfully to the directory !\n");
+                    temp.id = contacts.length+1;
+                    contacts.push(temp);
+                    temp = {};
+                    switchCase();
+                } else {
+                    console.log("The phone number was wrong, try again to add a contact, you can do it !");
+                    add();
+                }
             });
 
         });
@@ -78,9 +83,7 @@ function supprimer(){
 }
 
 function switchCase(){
-rl.question(`Hey Sir, i'm your directory ! 
-Enter /help to display a list of commands. 
-Otherwise just enter any existing commands.\n`, value => {
+rl.question(`Otherwise just enter any existing commands : \n`, value => {
     switch (value) {
         case "/help":
             console.log("There is the details of differents commands available");
@@ -114,4 +117,3 @@ Otherwise just enter any existing commands.\n`, value => {
 
 });
 }
-adam
